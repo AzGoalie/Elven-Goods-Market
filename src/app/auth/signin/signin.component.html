@@ -1,0 +1,51 @@
+<section class="center">
+  <form class="form" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+    <h1 class="form__title">Sign In</h1>
+
+    <div class="form__group">
+      <input
+        class="form__input"
+        type="text"
+        placeholder="Email"
+        aria-label="Email"
+        formControlName="email"
+        required
+      />
+      <p
+        class="form__error"
+        *ngIf="
+          signinForm.controls['email'].hasError('required') &&
+          signinForm.controls['email'].touched
+        "
+      >
+        An email address is required
+      </p>
+    </div>
+
+    <div class="form__group">
+      <input
+        class="form__input"
+        type="password"
+        placeholder="Password"
+        aria-label="Password"
+        formControlName="password"
+        required
+      />
+      <p
+        class="form__error"
+        *ngIf="
+          signinForm.controls['password'].hasError('required') &&
+          signinForm.controls['password'].touched
+        "
+      >
+        A password is required
+      </p>
+    </div>
+
+    <button class="form__button" type="submit" [disabled]="signinForm.invalid">
+      Sign Up
+    </button>
+
+    <p>Don't have an account? <a routerLink="/signup">Create one here!</a></p>
+  </form>
+</section>
