@@ -4,6 +4,8 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .center {
@@ -38,6 +40,6 @@
 
   &__error {
     margin: 0.5rem 0;
-    color: red;
+    color: rgb(175, 0, 0);
   }
 }

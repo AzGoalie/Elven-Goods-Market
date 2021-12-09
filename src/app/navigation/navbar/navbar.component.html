@@ -1,14 +1,39 @@
-<nav class="navbar">
-  <span class="navbar__logo"><h1>Elven Goods Market</h1></span>
-  <ul class="navbar__links">
-    <li class="navbar__link">
-      <a routerLink="/">Home</a>
-    </li>
-    <li class="navbar__link">
-      <a routerLink="/signup">Sign Up</a>
-    </li>
-    <li class="navbar__link">
-      <a routerLink="/signin">Sign In</a>
-    </li>
-  </ul>
-</nav>
+<header>
+  <h1 class="logo">Elven Goods Market</h1>
+  <input
+    type="checkbox"
+    id="nav-toggle"
+    class="mobile-nav-toggle"
+    role="menu"
+    aria-label="Menu"
+  />
+  <nav class="navbar">
+    <ul class="navbar__links">
+      <li class="navbar__link">
+        <a routerLink="/">Home</a>
+      </li>
+      <li class="navbar__link">
+        <a routerLink="/signup">Sign Up</a>
+      </li>
+      <li class="navbar__link">
+        <a routerLink="/signin">Sign In</a>
+      </li>
+    </ul>
+  </nav>
+  <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="menu-icon"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    </svg>
+  </label>
+</header>

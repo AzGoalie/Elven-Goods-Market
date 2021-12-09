@@ -2,11 +2,12 @@
   <form class="form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <h1 class="form__title">Create an account</h1>
     <div class="form__group">
+      <label for="email">Email</label>
       <input
+        id="email"
         class="form__input"
         type="text"
         placeholder="Email"
-        aria-label="Email"
         formControlName="email"
         required
       />
@@ -22,11 +23,12 @@
     </div>
 
     <div class="form__group">
+      <label for="password">Password</label>
       <input
+        id="password"
         class="form__input"
         type="password"
         placeholder="Password"
-        aria-label="Password"
         formControlName="password"
         required
       />
@@ -42,11 +44,12 @@
     </div>
 
     <div class="form__group">
+      <label for="confirmPassword">Confirm Password</label>
       <input
+        id="confirmPassword"
         class="form__input"
         type="password"
         placeholder="Confirm Password"
-        aria-label="Confirm password"
         formControlName="confirmPassword"
         required
       />
