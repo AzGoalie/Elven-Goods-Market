@@ -1,70 +1,196 @@
-<section class="center">
-  <form class="form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <h1 class="form__title">Create an account</h1>
-    <div class="form__group">
-      <input
-        class="form__input"
-        type="text"
-        placeholder="Email"
-        aria-label="Email"
-        formControlName="email"
-        required
-      />
-      <p
-        class="form__error"
-        *ngIf="
-          signupForm.controls['email'].hasError('required') &&
-          signupForm.controls['email'].touched
-        "
-      >
-        An email address is required
-      </p>
-    </div>
+<section
+  class="min-h-full flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8"
+>
+  <div class="max-w-md w-full space-y-8">
+    <h2 class="mt-6 text-center text-3xl lg:text-4xl text-gray-900">
+      Create your account
+    </h2>
+    <form
+      class="mt-8 space-y-6"
+      [formGroup]="signupForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="flex flex-col gap-4">
+        <div>
+          <label
+            for="email-address"
+            class="block font-semibold mb-2 text-gray-900"
+            >Email address</label
+          >
+          <input
+            id="email-address"
+            name="email"
+            type="email"
+            autocomplete="email"
+            formControlName="email"
+            required
+            [ngClass]="{
+              'border-red-500':
+                signupForm.controls['email'].invalid &&
+                signupForm.controls['email'].touched
+            }"
+            class="
+              appearance-none
+              rounded-md
+              relative
+              block
+              w-full
+              px-3
+              py-2
+              border border-gray-300
+              placeholder-gray-500
+              text-gray-900
+              focus:outline-none
+              focus:ring-indigo-500
+              focus:border-indigo-500
+              focus:z-10
+              sm:text-sm
+            "
+            placeholder="Email address"
+          />
+          <p
+            *ngIf="
+              signupForm.controls['email'].invalid &&
+              signupForm.controls['email'].touched
+            "
+            class="text-sm text-red-500"
+          >
+            An email address is required
+          </p>
+        </div>
 
-    <div class="form__group">
-      <input
-        class="form__input"
-        type="password"
-        placeholder="Password"
-        aria-label="Password"
-        formControlName="password"
-        required
-      />
-      <p
-        class="form__error"
-        *ngIf="
-          signupForm.controls['password'].hasError('required') &&
-          signupForm.controls['password'].touched
-        "
-      >
-        A password is required
-      </p>
-    </div>
+        <div>
+          <label for="password" class="block font-semibold mb-2 text-gray-900"
+            >Password</label
+          >
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            formControlName="password"
+            required
+            [ngClass]="{
+              'border-red-500':
+                signupForm.controls['password'].invalid &&
+                signupForm.controls['password'].touched
+            }"
+            class="
+              appearance-none
+              rounded-md
+              relative
+              block
+              w-full
+              px-3
+              py-2
+              border border-gray-300
+              placeholder-gray-500
+              text-gray-900
+              focus:outline-none
+              focus:ring-indigo-500
+              focus:border-indigo-500
+              focus:z-10
+              sm:text-sm
+            "
+            placeholder="Password"
+          />
 
-    <div class="form__group">
-      <input
-        class="form__input"
-        type="password"
-        placeholder="Confirm Password"
-        aria-label="Confirm password"
-        formControlName="confirmPassword"
-        required
-      />
-      <p
-        class="form__error"
-        *ngIf="
-          signupForm.hasError('passwordMismatch') &&
-          signupForm.controls['confirmPassword'].touched
-        "
-      >
-        Passwords do not match
-      </p>
-    </div>
+          <p
+            class="text-sm text-red-500"
+            *ngIf="
+              signupForm.controls['password'].hasError('required') &&
+              signupForm.controls['password'].touched
+            "
+          >
+            A password is required
+          </p>
+        </div>
 
-    <button class="form__button" type="submit" [disabled]="signupForm.invalid">
-      Sign Up
-    </button>
+        <div>
+          <label
+            for="confirmPassword"
+            class="block font-semibold mb-2 text-gray-900"
+            >Confirm Password</label
+          >
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            autocomplete="off"
+            formControlName="confirmPassword"
+            required
+            [ngClass]="{
+              'border-red-500':
+                signupForm.hasError('passwordMismatch') &&
+                signupForm.controls['confirmPassword'].touched
+            }"
+            class="
+              appearance-none
+              rounded-md
+              relative
+              block
+              w-full
+              px-3
+              py-2
+              border border-gray-300
+              placeholder-gray-500
+              text-gray-900
+              focus:outline-none
+              focus:ring-indigo-500
+              focus:border-indigo-500
+              focus:z-10
+              sm:text-sm
+            "
+            placeholder="Confirm password"
+          />
+          <p
+            *ngIf="
+              signupForm.hasError('passwordMismatch') &&
+              signupForm.controls['confirmPassword'].touched
+            "
+            class="text-sm text-red-500"
+          >
+            Passwords do not match
+          </p>
+        </div>
+      </div>
 
-    <p>Already have an account? <a routerLink="/signin">Sign in here!</a></p>
-  </form>
+      <div>
+        <button
+          type="submit"
+          [disabled]="signupForm.invalid"
+          class="
+            group
+            relative
+            w-full
+            flex
+            justify-center
+            py-2
+            px-4
+            border border-transparent
+            text-sm
+            font-medium
+            rounded-md
+            text-white
+            bg-indigo-600
+            disabled:opacity-50
+            hover:bg-indigo-700
+            disabled:bg-indigo-600
+            focus:outline-none
+            focus:ring-2
+            focus:ring-offset-2
+            focus:ring-indigo-500
+          "
+        >
+          Sign up
+        </button>
+        <p class="text-sm font-medium py-4">
+          Already have an account?
+          <a routerLink="/signin" class="text-indigo-600 hover:text-indigo-500">
+            Sign in here!
+          </a>
+        </p>
+      </div>
+    </form>
+  </div>
 </section>
