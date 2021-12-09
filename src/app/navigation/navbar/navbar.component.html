@@ -16,7 +16,7 @@
             focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white
           "
           aria-controls="mobile-menu"
-          aria-expanded="false"
+          [attr.aria-expanded]="isOpen"
         >
           <span class="sr-only">Open main menu</span>
           <svg
@@ -61,16 +61,16 @@
           sm:items-stretch sm:justify-between
         "
       >
-        <div class="flex-shrink-0 flex items-center">
-          <h1 class="font-display text-xl text-white">Elven Goods Market</h1>
-        </div>
+        <h1 class="font-display text-xl text-white">Elven Goods Market</h1>
 
         <div class="hidden sm:block sm:ml-6">
           <div class="flex space-x-4 text-gray-300">
             <a
-              routerLink="/"
+              *ngFor="let navLink of navLinks"
+              [routerLink]="navLink.path"
               routerLinkActive="bg-gray-900 text-white"
               [routerLinkActiveOptions]="{ exact: true }"
+              #rla="routerLinkActive"
               class="
                 hover:bg-gray-700 hover:text-white
                 px-3
@@ -79,38 +79,9 @@
                 text-sm
                 font-medium
               "
+              [attr.aria-current]="rla.isActive ? 'page' : null"
             >
-              Home
-            </a>
-
-            <a
-              routerLink="/signup"
-              routerLinkActive="bg-gray-900 text-white"
-              class="
-                hover:bg-gray-700 hover:text-white
-                px-3
-                py-2
-                rounded-md
-                text-sm
-                font-medium
-              "
-            >
-              Sign Up
-            </a>
-
-            <a
-              routerLink="/signin"
-              routerLinkActive="bg-gray-900 text-white"
-              class="
-                hover:bg-gray-700 hover:text-white
-                px-3
-                py-2
-                rounded-md
-                text-sm
-                font-medium
-              "
-            >
-              Sign In
+              {{ navLink.name }}
             </a>
           </div>
         </div>
@@ -119,16 +90,18 @@
   </div>
 
   <div
+    id="mobile-menu"
     *ngIf="isOpen"
     (click)="isOpen = false"
     class="sm:hidden"
-    id="mobile-menu"
   >
     <div class="px-2 pt-2 pb-3 space-y-1 text-gray-300">
       <a
-        routerLink="/"
+        *ngFor="let navLink of navLinks"
+        [routerLink]="navLink.path"
         routerLinkActive="bg-gray-900 text-white"
         [routerLinkActiveOptions]="{ exact: true }"
+        #rla="routerLinkActive"
         class="
           hover:bg-gray-700 hover:text-white
           block
@@ -138,41 +111,9 @@
           text-base
           font-medium
         "
-        aria-current="page"
+        [attr.aria-current]="rla.isActive ? 'page' : null"
       >
-        Home
-      </a>
-
-      <a
-        routerLink="/signup"
-        routerLinkActive="bg-gray-900 text-white"
-        class="
-          hover:bg-gray-700 hover:text-white
-          block
-          px-3
-          py-2
-          rounded-md
-          text-base
-          font-medium
-        "
-      >
-        Sign Up
-      </a>
-
-      <a
-        routerLink="/signin"
-        routerLinkActive="bg-gray-900 text-white"
-        class="
-          hover:bg-gray-700 hover:text-white
-          block
-          px-3
-          py-2
-          rounded-md
-          text-base
-          font-medium
-        "
-      >
-        Sign In
+        {{ navLink.name }}
       </a>
     </div>
   </div>

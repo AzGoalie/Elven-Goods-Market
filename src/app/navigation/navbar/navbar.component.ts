@@ -8,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
   isOpen = false;
 
+  navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Sign Up', path: '/signup' },
+    { name: 'Sign In', path: '/signin' },
+  ];
+
   constructor() {}
 
   ngOnInit(): void {}

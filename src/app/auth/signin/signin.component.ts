@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { AbstractControl, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-signin',
@@ -11,6 +11,14 @@ export class SigninComponent implements OnInit {
     email: [''],
     password: [''],
   });
+
+  get email(): AbstractControl {
+    return this.signinForm.controls['email'];
+  }
+
+  get password(): AbstractControl {
+    return this.signinForm.controls['password'];
+  }
 
   constructor(private fb: FormBuilder) {}
 

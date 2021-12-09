@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { AbstractControl, FormBuilder } from '@angular/forms';
 import { confirmPasswordValidator } from '../validators';
 
 @Component({
@@ -16,6 +16,18 @@ export class SignupComponent implements OnInit {
     },
     { validators: confirmPasswordValidator }
   );
+
+  get email(): AbstractControl {
+    return this.signupForm.controls['email'];
+  }
+
+  get password(): AbstractControl {
+    return this.signupForm.controls['password'];
+  }
+
+  get confirmPassword(): AbstractControl {
+    return this.signupForm.controls['confirmPassword'];
+  }
 
   constructor(private fb: FormBuilder) {}
 
