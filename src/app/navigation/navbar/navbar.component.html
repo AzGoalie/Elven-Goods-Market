@@ -4,19 +4,18 @@
     type="checkbox"
     id="nav-toggle"
     class="mobile-nav-toggle"
-    role="menu"
     aria-label="Menu"
   />
   <nav class="navbar">
-    <ul class="navbar__links">
+    <ul class="navbar__links" role="menu">
       <li class="navbar__link">
-        <a routerLink="/">Home</a>
+        <a routerLink="/" role="menuitem">Home</a>
       </li>
       <li class="navbar__link">
-        <a routerLink="/signup">Sign Up</a>
+        <a routerLink="/signup" role="menuitem">Sign Up</a>
       </li>
       <li class="navbar__link">
-        <a routerLink="/signin">Sign In</a>
+        <a routerLink="/signin" role="menuitem">Sign In</a>
       </li>
     </ul>
   </nav>
@@ -27,6 +26,7 @@
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
+      aria-hidden="true"
     >
       <path
         stroke-linecap="round"
