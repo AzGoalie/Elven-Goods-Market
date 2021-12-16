@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "elven-goods-market": {
+      "hosting": {
+        "elven-goods-market": [
+          "elven-goods-market"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "elven-goods-market"
+  }
+}
