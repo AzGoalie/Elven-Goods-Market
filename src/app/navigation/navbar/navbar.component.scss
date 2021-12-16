@@ -2,9 +2,27 @@ header {
   border-bottom: 1px solid black;
 }
 
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .logo {
-  padding: 1rem;
+  padding: 0.5rem;
+  flex-grow: 1;
   text-align: center;
+}
+
+.nav-toggle-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .menu-icon {
+    width: 2rem;
+    height: 2rem;
+    margin-left: 0.5rem;
+  }
 }
 
 .mobile-nav-toggle {
@@ -44,16 +62,6 @@ header {
       }
     }
   }
-}
-
-.menu-icon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin-left: 0.5rem;
-  margin-top: 1.25rem;
-  width: 2rem;
-  height: 2rem;
 }
 
 @media only screen and (min-width: 560px) {
