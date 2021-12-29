@@ -6,7 +6,12 @@ export const confirmPasswordValidator: ValidatorFn = (
   const password = control.get('password');
   const confirmPassword = control.get('confirmPassword');
 
-  return password?.value !== confirmPassword?.value
-    ? { passwordMismatch: true }
-    : null;
+  const error = { passwordMismatch: true };
+
+  if (password?.value !== confirmPassword?.value) {
+    confirmPassword?.setErrors(error);
+    return error;
+  }
+
+  return null;
 };
