@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 import { confirmPasswordValidator } from '../validators';
 
 @Component({
@@ -17,11 +19,22 @@ export class SignupComponent implements OnInit {
     { validators: confirmPasswordValidator }
   );
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
 
   onSubmit(): void {
-    console.log(this.signupForm);
+    if (this.signupForm.valid) {
+      this.authService.createAccount(
+        this.signupForm.get('email')?.value,
+        this.signupForm.get('password')?.value
+      );
+
+      this.router.navigate(['/']);
+    }
   }
 }
