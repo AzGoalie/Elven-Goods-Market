@@ -16,23 +16,46 @@
     </label>
     <h1 class="logo">Elven Goods Market</h1>
   </div>
-  <input type="checkbox" id="nav-toggle" class="mobile-nav-toggle" />
+  <input
+    type="checkbox"
+    id="nav-toggle"
+    class="mobile-nav-toggle"
+    #mobileNavToggle
+  />
   <nav class="navbar">
     <ul class="navbar__links" role="menu">
       <li class="navbar__link">
-        <a routerLink="/" role="menuitem">Home</a>
+        <a
+          routerLink="/"
+          role="menuitem"
+          (click)="mobileNavToggle.checked = false"
+        >
+          Home
+        </a>
       </li>
       <li *ngIf="!this.authService.isAuthenticated" class="navbar__link">
-        <a routerLink="/signup" role="menuitem">Sign Up</a>
+        <a
+          routerLink="/signup"
+          role="menuitem"
+          (click)="mobileNavToggle.checked = false"
+        >
+          Sign Up
+        </a>
       </li>
       <li *ngIf="!this.authService.isAuthenticated" class="navbar__link">
-        <a routerLink="/signin" role="menuitem">Sign In</a>
+        <a
+          routerLink="/signin"
+          role="menuitem"
+          (click)="mobileNavToggle.checked = false"
+        >
+          Sign In
+        </a>
       </li>
       <li *ngIf="this.authService.isAuthenticated" class="navbar__link">
         <a
           routerLink="/signin"
           role="menuitem"
-          (click)="this.authService.signOut()"
+          (click)="this.authService.signOut(); mobileNavToggle.checked = false"
         >
           Sign Out
         </a>
