@@ -20,6 +20,15 @@
       >
         An email address is required
       </p>
+      <p
+        class="form__error"
+        *ngIf="
+          signinForm.controls['email'].hasError('email') &&
+          signinForm.controls['email'].touched
+        "
+      >
+        Please enter a valid email
+      </p>
     </div>
 
     <div class="form__group">
@@ -39,6 +48,9 @@
         "
       >
         A password is required
+      </p>
+      <p class="form__error" *ngIf="signinError">
+        {{ signinError }}
       </p>
     </div>
 

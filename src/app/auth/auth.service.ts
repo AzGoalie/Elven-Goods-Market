@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   User,
+  UserCredential,
 } from '@angular/fire/auth';
 import { EMPTY, Observable, Subscription } from 'rxjs';
 
@@ -29,12 +30,15 @@ export class AuthService implements OnDestroy {
     this.userSubscription?.unsubscribe();
   }
 
-  public createAccount(email: string, password: string): void {
-    createUserWithEmailAndPassword(this.auth, email, password);
+  public createAccount(
+    email: string,
+    password: string
+  ): Promise<UserCredential> {
+    return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  public signIn(email: string, password: string): void {
-    signInWithEmailAndPassword(this.auth, email, password);
+  public signIn(email: string, password: string): Promise<UserCredential> {
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
   public signOut(): void {

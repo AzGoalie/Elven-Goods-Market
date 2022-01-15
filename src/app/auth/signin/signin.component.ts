@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthError, SignInErrorCode } from '../auth-error';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -10,9 +11,11 @@ import { AuthService } from '../auth.service';
 })
 export class SigninComponent implements OnInit {
   signinForm = this.fb.group({
-    email: [''],
+    email: ['', Validators.email],
     password: [''],
   });
+
+  signinError: string = '';
 
   constructor(
     private authService: AuthService,
@@ -23,13 +26,34 @@ export class SigninComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(): void {
+    this.signinError = '';
     if (this.signinForm.valid) {
-      this.authService.signIn(
-        this.signinForm.get('email')?.value,
-        this.signinForm.get('password')?.value
-      );
-
-      this.router.navigate(['/']);
+      this.authService
+        .signIn(
+          this.signinForm.get('email')?.value,
+          this.signinForm.get('password')?.value
+        )
+        .then((_) => this.router.navigate(['/']))
+        .catch(({ code }: AuthError<SignInErrorCode>) => {
+          switch (code) {
+            case 'auth/invalid-email':
+              throw new Error(
+                `${code} - should have been covered by Validators.email`
+              );
+            case 'auth/user-disabled':
+              this.signinError = 'Account is disabled, please contact support';
+              break;
+            case 'auth/user-not-found':
+            case 'auth/wrong-password':
+              this.signinError = 'Invalid email / password combination';
+              break;
+            default:
+              const _exhaustiveCheck: never = code;
+              throw new Error(
+                `Unhandled case for SignInErrorCode: ${_exhaustiveCheck}`
+              );
+          }
+        });
     }
   }
 }

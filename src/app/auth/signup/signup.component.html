@@ -1,6 +1,7 @@
 <section class="center">
   <form class="form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <h1 class="form__title">Create an account</h1>
+
     <div class="form__group">
       <label for="email">Email</label>
       <input
@@ -29,6 +30,7 @@
         placeholder="Password"
         formControlName="password"
         required
+        minlength="6"
       />
       <p
         class="form__error"
@@ -38,6 +40,15 @@
         "
       >
         A password is required
+      </p>
+      <p
+        class="form__error"
+        *ngIf="
+          signupForm.controls['password'].hasError('minlength') &&
+          signupForm.controls['password'].touched
+        "
+      >
+        A password must have at least 6 characters
       </p>
     </div>
 
@@ -57,6 +68,9 @@
         "
       >
         Passwords do not match
+      </p>
+      <p class="form__error" *ngIf="signupError">
+        {{ signupError }}
       </p>
     </div>
 
