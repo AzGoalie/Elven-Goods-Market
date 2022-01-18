@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthError, SignUpErrorCode } from '../auth-error';
@@ -10,7 +10,7 @@ import { confirmPasswordValidator } from '../validators';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
   signupForm = this.fb.group(
     {
       email: ['', Validators.email],
@@ -27,8 +27,6 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router
   ) {}
-
-  ngOnInit(): void {}
 
   onSubmit(): void {
     if (this.signupForm.valid) {

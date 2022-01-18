@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthError, SignInErrorCode } from '../auth-error';
@@ -9,7 +9,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent {
   signinForm = this.fb.group({
     email: ['', Validators.email],
     password: [''],
@@ -22,8 +22,6 @@ export class SigninComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router
   ) {}
-
-  ngOnInit(): void {}
 
   onSubmit(): void {
     this.signinError = '';
