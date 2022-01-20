@@ -6,7 +6,7 @@
     "start": "firebase emulators:exec 'ng serve'",
     "build": "ng build",
     "watch": "firebase emulators:exec 'ng build --watch --configuration development'",
-    "test": "ng test",
+    "test": "firebase emulators:exec 'ng test'",
     "lint": "ng lint"
   },
   "private": true,
