@@ -12,18 +12,12 @@ import { EMPTY, Observable, Subscription } from 'rxjs';
 
 @Injectable()
 export class AuthService implements OnDestroy {
-  private userObservable: Observable<User | null> = EMPTY;
   private userSubscription: Subscription | undefined;
 
-  public user: User | null = null;
-  public isAuthenticated = false;
+  public user: Observable<User | null> = EMPTY;
 
   constructor(private auth: Auth) {
-    this.userObservable = authState(this.auth);
-    this.userSubscription = this.userObservable.subscribe((u) => {
-      this.user = u;
-      this.isAuthenticated = !!u;
-    });
+    this.user = authState(this.auth);
   }
 
   ngOnDestroy(): void {
@@ -41,7 +35,7 @@ export class AuthService implements OnDestroy {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  public signOut(): void {
-    signOut(this.auth);
+  public signOut(): Promise<void> {
+    return signOut(this.auth);
   }
 }

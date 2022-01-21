@@ -33,7 +33,7 @@
           Home
         </a>
       </li>
-      <li *ngIf="!this.authService.isAuthenticated" class="navbar__link">
+      <li *ngIf="!(this.authService.user | async)" class="navbar__link">
         <a
           routerLink="/signup"
           role="menuitem"
@@ -42,7 +42,7 @@
           Sign Up
         </a>
       </li>
-      <li *ngIf="!this.authService.isAuthenticated" class="navbar__link">
+      <li *ngIf="!(this.authService.user | async)" class="navbar__link">
         <a
           routerLink="/signin"
           role="menuitem"
@@ -51,7 +51,7 @@
           Sign In
         </a>
       </li>
-      <li *ngIf="this.authService.isAuthenticated" class="navbar__link">
+      <li *ngIf="this.authService.user | async" class="navbar__link">
         <a
           routerLink="/signin"
           role="menuitem"
