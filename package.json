@@ -8,7 +8,8 @@
     "watch": "firebase emulators:exec \"ng build --watch --configuration development\"",
     "test": "firebase emulators:exec \"ng test\"",
     "test:headless": "firebase emulators:exec \"ng test --watch=false --browsers=FirefoxDeveloperHeadless\"",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
@@ -41,6 +42,7 @@
     "@typescript-eslint/eslint-plugin": "5.3.0",
     "@typescript-eslint/parser": "5.3.0",
     "eslint": "^8.2.0",
+    "husky": "^7.0.4",
     "jasmine-core": "~3.10.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
