@@ -11,12 +11,12 @@
         formControlName="email"
         required
       />
+      <p class="form__error" *ngIf="email?.hasError('email') && email?.touched">
+        Please enter a valid email
+      </p>
       <p
         class="form__error"
-        *ngIf="
-          signupForm.controls['email'].hasError('required') &&
-          signupForm.controls['email'].touched
-        "
+        *ngIf="email?.hasError('required') && email?.touched"
       >
         An email address is required
       </p>
@@ -34,19 +34,13 @@
       />
       <p
         class="form__error"
-        *ngIf="
-          signupForm.controls['password'].hasError('required') &&
-          signupForm.controls['password'].touched
-        "
+        *ngIf="password?.hasError('required') && password?.touched"
       >
         A password is required
       </p>
       <p
         class="form__error"
-        *ngIf="
-          signupForm.controls['password'].hasError('minlength') &&
-          signupForm.controls['password'].touched
-        "
+        *ngIf="password?.hasError('minlength') && password?.touched"
       >
         A password must have at least 6 characters
       </p>
@@ -63,8 +57,7 @@
       <p
         class="form__error"
         *ngIf="
-          signupForm.hasError('passwordMismatch') &&
-          signupForm.controls['confirmPassword'].touched
+          signupForm.hasError('passwordMismatch') && confirmPassword?.touched
         "
       >
         Passwords do not match

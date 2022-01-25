@@ -20,6 +20,18 @@ export class SignupComponent {
     { validators: confirmPasswordValidator }
   );
 
+  get email() {
+    return this.signupForm.get('email');
+  }
+
+  get password() {
+    return this.signupForm.get('password');
+  }
+
+  get confirmPassword() {
+    return this.signupForm.get('confirmPassword');
+  }
+
   signupError: string = '';
 
   constructor(
@@ -31,10 +43,7 @@ export class SignupComponent {
   onSubmit(): void {
     if (this.signupForm.valid) {
       this.authService
-        .createAccount(
-          this.signupForm.get('email')?.value,
-          this.signupForm.get('password')?.value
-        )
+        .createAccount(this.email?.value, this.password?.value)
         .then((_) => this.router.navigate(['/']))
         .catch(({ code }: AuthError<SignUpErrorCode>) => {
           switch (code) {
