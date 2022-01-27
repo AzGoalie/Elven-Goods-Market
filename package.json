@@ -6,8 +6,8 @@
     "start": "firebase emulators:exec \"ng serve\"",
     "build": "ng build",
     "watch": "firebase emulators:exec \"ng build --watch --configuration development\"",
-    "test": "firebase emulators:exec \"ng test\"",
-    "test:headless": "firebase emulators:exec \"ng test --watch=false --browsers=FirefoxDeveloperHeadless\"",
+    "test": "ng test",
+    "test:headless": "ng test --watch=false --browsers=FirefoxDeveloperHeadless",
     "lint": "ng lint",
     "prepare": "husky install"
   },
