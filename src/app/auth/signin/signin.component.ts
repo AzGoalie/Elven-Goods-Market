@@ -17,6 +17,14 @@ export class SigninComponent {
 
   signinError: string = '';
 
+  get email() {
+    return this.signinForm.get('email');
+  }
+
+  get password() {
+    return this.signinForm.get('password');
+  }
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -27,10 +35,7 @@ export class SigninComponent {
     this.signinError = '';
     if (this.signinForm.valid) {
       this.authService
-        .signIn(
-          this.signinForm.get('email')?.value,
-          this.signinForm.get('password')?.value
-        )
+        .signIn(this.email?.value, this.password?.value)
         .then((_) => this.router.navigate(['/']))
         .catch(({ code }: AuthError<SignInErrorCode>) => {
           switch (code) {

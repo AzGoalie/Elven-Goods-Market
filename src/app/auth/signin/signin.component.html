@@ -13,20 +13,11 @@
       />
       <p
         class="form__error"
-        *ngIf="
-          signinForm.controls['email'].hasError('required') &&
-          signinForm.controls['email'].touched
-        "
+        *ngIf="email?.hasError('required') && email?.touched"
       >
         An email address is required
       </p>
-      <p
-        class="form__error"
-        *ngIf="
-          signinForm.controls['email'].hasError('email') &&
-          signinForm.controls['email'].touched
-        "
-      >
+      <p class="form__error" *ngIf="email?.hasError('email') && email?.touched">
         Please enter a valid email
       </p>
     </div>
@@ -42,10 +33,7 @@
       />
       <p
         class="form__error"
-        *ngIf="
-          signinForm.controls['password'].hasError('required') &&
-          signinForm.controls['password'].touched
-        "
+        *ngIf="password?.hasError('required') && password?.touched"
       >
         A password is required
       </p>

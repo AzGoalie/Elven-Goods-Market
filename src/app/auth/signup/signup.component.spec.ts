@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthErrorCodes } from 'firebase/auth';
+import { updateInput } from '../../../testing';
 import { AuthError, SignUpErrorCode } from '../auth-error';
 import { AuthService } from '../auth.service';
 import { SignupComponent } from './signup.component';
@@ -47,18 +47,9 @@ describe('SignupComponent', () => {
       By.css('#confirmPassword')
     );
 
-    emailInput.nativeElement.value = 'test@elvengoods.com';
-    passwordInput.nativeElement.value = 'password';
-    confirmPasswordInput.nativeElement.value = 'password';
-
-    emailInput.nativeElement.dispatchEvent(new Event('input'));
-    emailInput.nativeElement.dispatchEvent(new Event('blur'));
-
-    passwordInput.nativeElement.dispatchEvent(new Event('input'));
-    passwordInput.nativeElement.dispatchEvent(new Event('blur'));
-
-    confirmPasswordInput.nativeElement.dispatchEvent(new Event('input'));
-    confirmPasswordInput.nativeElement.dispatchEvent(new Event('blur'));
+    updateInput(emailInput, 'test@elvengoods.com');
+    updateInput(passwordInput, 'password');
+    updateInput(confirmPasswordInput, 'password');
 
     fixture.detectChanges();
 
@@ -89,8 +80,7 @@ describe('SignupComponent', () => {
 
   it('should require an email address', () => {
     const emailInput = fixture.debugElement.query(By.css('#email'));
-    emailInput.nativeElement.dispatchEvent(new Event('input'));
-    emailInput.nativeElement.dispatchEvent(new Event('blur'));
+    updateInput(emailInput, '');
     fixture.detectChanges();
 
     // Validate the form object
@@ -106,9 +96,7 @@ describe('SignupComponent', () => {
 
   it('should not allow invalid email addresses', () => {
     const emailInput = fixture.debugElement.query(By.css('#email'));
-    emailInput.nativeElement.value = 'invalid email';
-    emailInput.nativeElement.dispatchEvent(new Event('input'));
-    emailInput.nativeElement.dispatchEvent(new Event('blur'));
+    updateInput(emailInput, 'invalid email');
     fixture.detectChanges();
 
     // Validate the form object
@@ -124,9 +112,7 @@ describe('SignupComponent', () => {
 
   it('should allow valid email addresses', () => {
     const emailInput = fixture.debugElement.query(By.css('#email'));
-    emailInput.nativeElement.value = 'valid@email';
-    emailInput.nativeElement.dispatchEvent(new Event('input'));
-    emailInput.nativeElement.dispatchEvent(new Event('blur'));
+    updateInput(emailInput, 'valid@email');
     fixture.detectChanges();
 
     expect(component.email?.valid).toBeTrue();
@@ -135,8 +121,7 @@ describe('SignupComponent', () => {
 
   it('should require a password', () => {
     const passwordInput = fixture.debugElement.query(By.css('#password'));
-    passwordInput.nativeElement.dispatchEvent(new Event('input'));
-    passwordInput.nativeElement.dispatchEvent(new Event('blur'));
+    updateInput(passwordInput, '');
     fixture.detectChanges();
 
     // Validate the form object
@@ -152,9 +137,7 @@ describe('SignupComponent', () => {
 
   it('should not allow a password shorter than 6 characters', () => {
     const passwordInput = fixture.debugElement.query(By.css('#password'));
-    passwordInput.nativeElement.value = 'abc';
-    passwordInput.nativeElement.dispatchEvent(new Event('input'));
-    passwordInput.nativeElement.dispatchEvent(new Event('blur'));
+    updateInput(passwordInput, 'abc');
     fixture.detectChanges();
 
     // Validate the form object
@@ -172,9 +155,7 @@ describe('SignupComponent', () => {
 
   it('should allow valid passwords', () => {
     const passwordInput = fixture.debugElement.query(By.css('#password'));
-    passwordInput.nativeElement.value = 'password';
-    passwordInput.nativeElement.dispatchEvent(new Event('input'));
-    passwordInput.nativeElement.dispatchEvent(new Event('blur'));
+    updateInput(passwordInput, 'password');
     fixture.detectChanges();
 
     expect(component.password?.valid).toBeTrue();
@@ -187,13 +168,8 @@ describe('SignupComponent', () => {
       By.css('#confirmPassword')
     );
 
-    passwordInput.nativeElement.value = 'password';
-    passwordInput.nativeElement.dispatchEvent(new Event('input'));
-    passwordInput.nativeElement.dispatchEvent(new Event('blur'));
-
-    confirmPasswordInput.nativeElement.value = 'wrong password';
-    confirmPasswordInput.nativeElement.dispatchEvent(new Event('input'));
-    confirmPasswordInput.nativeElement.dispatchEvent(new Event('blur'));
+    updateInput(passwordInput, 'password');
+    updateInput(confirmPasswordInput, 'wrong password');
     fixture.detectChanges();
 
     // Validate the form object
@@ -209,7 +185,7 @@ describe('SignupComponent', () => {
 
   it('should show an error about email already taken', async () => {
     const errorCode: AuthError<SignUpErrorCode> = {
-      code: AuthErrorCodes.EMAIL_EXISTS,
+      code: 'auth/email-already-in-use',
       message: '',
     };
     mockAuthService.createAccount.and.rejectWith(errorCode);
@@ -220,18 +196,9 @@ describe('SignupComponent', () => {
       By.css('#confirmPassword')
     );
 
-    emailInput.nativeElement.value = 'test@elvengoods.com';
-    passwordInput.nativeElement.value = 'password';
-    confirmPasswordInput.nativeElement.value = 'password';
-
-    emailInput.nativeElement.dispatchEvent(new Event('input'));
-    emailInput.nativeElement.dispatchEvent(new Event('blur'));
-
-    passwordInput.nativeElement.dispatchEvent(new Event('input'));
-    passwordInput.nativeElement.dispatchEvent(new Event('blur'));
-
-    confirmPasswordInput.nativeElement.dispatchEvent(new Event('input'));
-    confirmPasswordInput.nativeElement.dispatchEvent(new Event('blur'));
+    updateInput(emailInput, 'test@elvengoods.com');
+    updateInput(passwordInput, 'password');
+    updateInput(confirmPasswordInput, 'password');
 
     fixture.detectChanges();
 
@@ -244,6 +211,35 @@ describe('SignupComponent', () => {
       const [error] = getErrors();
       expect(error.properties['innerText']).toContain(
         'An account with this email already exists'
+      );
+    });
+  });
+
+  it('should create a new account with a valid form', async () => {
+    mockAuthService.createAccount.and.resolveTo({});
+
+    const emailInput = fixture.debugElement.query(By.css('#email'));
+    const passwordInput = fixture.debugElement.query(By.css('#password'));
+    const confirmPasswordInput = fixture.debugElement.query(
+      By.css('#confirmPassword')
+    );
+
+    updateInput(emailInput, 'test@elvengoods.com');
+    updateInput(passwordInput, 'password');
+    updateInput(confirmPasswordInput, 'password');
+
+    fixture.detectChanges();
+
+    const submitButton = fixture.debugElement.query(By.css('.form__button'));
+    submitButton.nativeElement.click();
+
+    await fixture.whenStable().then(() => {
+      fixture.detectChanges();
+
+      expect(getErrors()).toHaveSize(0);
+      expect(mockAuthService.createAccount).toHaveBeenCalledWith(
+        'test@elvengoods.com',
+        'password'
       );
     });
   });
