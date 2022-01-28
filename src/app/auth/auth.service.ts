@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Auth,
   authState,
@@ -8,20 +8,14 @@ import {
   User,
   UserCredential,
 } from '@angular/fire/auth';
-import { EMPTY, Observable, Subscription } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 
 @Injectable()
-export class AuthService implements OnDestroy {
-  private userSubscription: Subscription | undefined;
-
+export class AuthService {
   public user: Observable<User | null> = EMPTY;
 
   constructor(private auth: Auth) {
     this.user = authState(this.auth);
-  }
-
-  ngOnDestroy(): void {
-    this.userSubscription?.unsubscribe();
   }
 
   public createAccount(
