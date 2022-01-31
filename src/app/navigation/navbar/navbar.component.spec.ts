@@ -43,7 +43,7 @@ describe('NavbarComponent', () => {
   it('should change links when signed in', () => {
     fixture.detectChanges();
     const dom: HTMLElement = fixture.nativeElement;
-    const navlinks = dom.querySelector('.navbar__links');
+    const navlinks = dom.querySelector('.navbar__items');
 
     const signedOutLinks = ['Home', 'Sign Up', 'Sign In'];
     expect(navlinks?.childElementCount).toBe(3);

@@ -1,65 +1,33 @@
-<header>
-  <div class="logo-wrapper">
-    <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="menu-icon"
-        viewBox="0 0 20 20"
-        fill="currentColor"
+<nav class="navbar">
+  <span class="navbar__logo">Elven Goods Market</span>
+  <ul class="navbar__items">
+    <li class="navbar__item">
+      <a
+        class="navbar__link"
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
       >
-        <path
-          fill-rule="evenodd"
-          d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-          clip-rule="evenodd"
-        />
-      </svg>
-    </label>
-    <h1 class="logo">Elven Goods Market</h1>
-  </div>
-  <input
-    type="checkbox"
-    id="nav-toggle"
-    class="mobile-nav-toggle"
-    #mobileNavToggle
-  />
-  <nav class="navbar">
-    <ul class="navbar__links" role="menu">
-      <li class="navbar__link">
-        <a
-          routerLink="/"
-          role="menuitem"
-          (click)="mobileNavToggle.checked = false"
-        >
-          Home
-        </a>
-      </li>
-      <li *ngIf="(this.authService.user | async) === null" class="navbar__link">
-        <a
-          routerLink="/signup"
-          role="menuitem"
-          (click)="mobileNavToggle.checked = false"
-        >
-          Sign Up
-        </a>
-      </li>
-      <li *ngIf="(this.authService.user | async) === null" class="navbar__link">
-        <a
-          routerLink="/signin"
-          role="menuitem"
-          (click)="mobileNavToggle.checked = false"
-        >
-          Sign In
-        </a>
-      </li>
-      <li *ngIf="this.authService.user | async" class="navbar__link">
-        <a
-          routerLink="/signin"
-          role="menuitem"
-          (click)="this.authService.signOut(); mobileNavToggle.checked = false"
-        >
-          Sign Out
-        </a>
-      </li>
-    </ul>
-  </nav>
-</header>
+    </li>
+    <li *ngIf="(this.authService.user | async) === null" class="navbar__item">
+      <a class="navbar__link" routerLink="/signup" routerLinkActive="active"
+        >Sign Up</a
+      >
+    </li>
+    <li *ngIf="(this.authService.user | async) === null" class="navbar__item">
+      <a class="navbar__link" routerLink="/signin" routerLinkActive="active"
+        >Sign In</a
+      >
+    </li>
+    <li *ngIf="this.authService.user | async" class="navbar__item">
+      <a
+        class="navbar__link"
+        routerLink="/signin"
+        routerLinkActive="active"
+        (click)="this.authService.signOut()"
+        >Sign Out</a
+      >
+    </li>
+  </ul>
+</nav>
