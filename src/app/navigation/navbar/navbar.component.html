@@ -1,33 +1,46 @@
-<nav class="navbar">
-  <span class="navbar__logo">Elven Goods Market</span>
-  <ul class="navbar__items">
-    <li class="navbar__item">
-      <a
-        class="navbar__link"
-        routerLink="/"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        >Home</a
-      >
-    </li>
-    <li *ngIf="(this.authService.user | async) === null" class="navbar__item">
-      <a class="navbar__link" routerLink="/signup" routerLinkActive="active"
-        >Sign Up</a
-      >
-    </li>
-    <li *ngIf="(this.authService.user | async) === null" class="navbar__item">
-      <a class="navbar__link" routerLink="/signin" routerLinkActive="active"
-        >Sign In</a
-      >
-    </li>
-    <li *ngIf="this.authService.user | async" class="navbar__item">
-      <a
-        class="navbar__link"
-        routerLink="/signin"
-        routerLinkActive="active"
-        (click)="this.authService.signOut()"
-        >Sign Out</a
-      >
-    </li>
-  </ul>
-</nav>
+<mat-toolbar class="navbar" color="primary">
+  <button
+    mat-icon-button
+    *ngIf="isScreenSmall"
+    (click)="toggleSidenav.emit()"
+    aria-label="Open menu"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="logo">Elven Goods Market</span>
+  <nav *ngIf="!isScreenSmall">
+    <a
+      mat-button
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Home
+    </a>
+    <a
+      mat-button
+      *ngIf="(authService.user | async) === null"
+      routerLink="/signup"
+      routerLinkActive="active"
+    >
+      Sign Up
+    </a>
+    <a
+      mat-button
+      *ngIf="(authService.user | async) === null"
+      routerLink="/signin"
+      routerLinkActive="active"
+    >
+      Sign In
+    </a>
+    <a
+      mat-button
+      *ngIf="authService.user | async"
+      routerLink="/signin"
+      routerLinkActive="active"
+      (click)="authService.signOut()"
+    >
+      Sign Out
+    </a>
+  </nav>
+</mat-toolbar>

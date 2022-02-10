@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthError, SignUpErrorCode } from '../auth-error';
 import { AuthService } from '../auth.service';
-import { confirmPasswordValidator } from '../validators';
 
 @Component({
   selector: 'app-signup',
@@ -11,14 +10,10 @@ import { confirmPasswordValidator } from '../validators';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent {
-  signupForm = this.fb.group(
-    {
-      email: ['', Validators.email],
-      password: [''],
-      confirmPassword: [''],
-    },
-    { validators: confirmPasswordValidator }
-  );
+  signupForm = this.fb.group({
+    email: ['', Validators.email],
+    password: [''],
+  });
 
   get email() {
     return this.signupForm.get('email');
@@ -26,10 +21,6 @@ export class SignupComponent {
 
   get password() {
     return this.signupForm.get('password');
-  }
-
-  get confirmPassword() {
-    return this.signupForm.get('confirmPassword');
   }
 
   signupError: string = '';

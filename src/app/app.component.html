@@ -1,6 +1,16 @@
-<header>
-  <app-navbar></app-navbar>
-</header>
-<main>
-  <router-outlet></router-outlet>
-</main>
+<mat-sidenav-container>
+  <mat-sidenav #drawer mode="over">
+    <app-sidenav (closeNav)="drawer.close()"></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <header>
+      <app-navbar
+        [isScreenSmall]="(isScreenSmall | async) === true"
+        (toggleSidenav)="drawer.toggle()"
+      ></app-navbar>
+    </header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

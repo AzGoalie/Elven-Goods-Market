@@ -1,51 +1,63 @@
 <section class="center">
-  <form class="form" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
-    <h1 class="form__title">Sign In</h1>
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>Sign In</mat-card-title>
+    </mat-card-header>
 
-    <div class="form__group">
-      <label for="email">Email</label>
-      <input
-        id="email"
-        type="text"
-        placeholder="Email"
-        formControlName="email"
-        required
-      />
-      <p
-        class="form__error"
-        *ngIf="email?.hasError('required') && email?.touched"
-      >
-        An email address is required
-      </p>
-      <p class="form__error" *ngIf="email?.hasError('email') && email?.touched">
-        Please enter a valid email
-      </p>
-    </div>
+    <mat-card-content>
+      <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+        <mat-form-field id="email" appearance="standard">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            autocomplete="email"
+            formControlName="email"
+            required
+          />
+          <mat-icon matSuffix>mail_outline</mat-icon>
 
-    <div class="form__group">
-      <label for="password">Password</label>
-      <input
-        id="password"
-        type="password"
-        placeholder="Password"
-        formControlName="password"
-        required
-      />
-      <p
-        class="form__error"
-        *ngIf="password?.hasError('required') && password?.touched"
-      >
-        A password is required
-      </p>
-      <p class="form__error" *ngIf="signinError">
-        {{ signinError }}
-      </p>
-    </div>
+          <mat-error *ngIf="email?.hasError('required')">
+            An email address is required
+          </mat-error>
+          <mat-error *ngIf="email?.hasError('email')">
+            Please enter a valid email
+          </mat-error>
+        </mat-form-field>
 
-    <button class="form__button" type="submit" [disabled]="signinForm.invalid">
-      Sign In
-    </button>
+        <mat-form-field id="password" appearance="standard">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="showPassword.checked ? 'text' : 'password'"
+            autocomplete="current-password"
+            formControlName="password"
+            required
+          />
+          <mat-icon matSuffix>lock_outline</mat-icon>
 
-    <p>Don't have an account? <a routerLink="/signup">Create one here!</a></p>
-  </form>
+          <mat-error *ngIf="password?.hasError('required')">
+            A password is requried
+          </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox #showPassword>Show password</mat-checkbox>
+
+        <mat-error [hidden]="!signinError">
+          {{ signinError }}
+        </mat-error>
+
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="signinForm.invalid"
+          color="primary"
+        >
+          Submit
+        </button>
+      </form>
+    </mat-card-content>
+
+    <p>Don't have an account? <a routerLink="/signup">Sign up here!</a></p>
+  </mat-card>
 </section>

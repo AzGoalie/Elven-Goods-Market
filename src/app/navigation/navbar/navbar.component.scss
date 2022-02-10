@@ -1,45 +1,15 @@
 .navbar {
+  position: relative;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid black;
+  z-index: 2;
 
-  &__logo {
-    font-size: 1.5rem;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  &__items {
-    display: flex;
-    list-style-type: none;
-  }
-
-  &__link {
-    text-decoration: none;
-    margin: 0.5rem;
-    padding: 1rem;
-
-    &:hover,
-    &.active {
-      text-decoration: underline;
-    }
-
-    &:visited {
-      color: inherit;
-    }
+  .logo {
+    flex-grow: 1;
+    font-family: var(--ff-display);
   }
 }
 
-@media screen and (max-width: 600px) {
-  .navbar {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    &__logo {
-      margin-bottom: 1rem;
-    }
-  }
+.active {
+  background: rgba(0, 0, 0, 0.2);
 }

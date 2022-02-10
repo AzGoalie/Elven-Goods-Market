@@ -2,15 +2,14 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { User } from '@angular/fire/auth';
-import { MatButtonHarness } from '@angular/material/button/testing';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatToolbarHarness } from '@angular/material/toolbar/testing';
+import { MatListModule } from '@angular/material/list';
+import { MatNavListHarness } from '@angular/material/list/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Subject } from 'rxjs';
 import { RouterLinkDirectiveStub } from '../../../testing';
 import { AuthService } from '../../auth/auth.service';
-import { NavbarComponent } from './navbar.component';
+import { SidenavComponent } from './sidenav.component';
 
 const userSubject = new Subject<User>();
 const mockAuthService: Partial<AuthService> = {
@@ -18,12 +17,12 @@ const mockAuthService: Partial<AuthService> = {
   signOut: () => Promise.resolve(),
 };
 
-describe('NavbarComponent', () => {
-  let component: NavbarComponent;
-  let fixture: ComponentFixture<NavbarComponent>;
+describe('SidenavComponent', () => {
+  let component: SidenavComponent;
+  let fixture: ComponentFixture<SidenavComponent>;
   let loader: HarnessLoader;
 
-  let toolbar: MatToolbarHarness;
+  let navList: MatNavListHarness;
 
   const getRouterLink = (innerText: string) => {
     return fixture.debugElement
@@ -34,19 +33,19 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, MatToolbarModule],
+      imports: [RouterTestingModule, MatListModule],
       providers: [{ provide: AuthService, useValue: mockAuthService }],
-      declarations: [NavbarComponent, RouterLinkDirectiveStub],
+      declarations: [SidenavComponent, RouterLinkDirectiveStub],
     }).compileComponents();
   });
 
   beforeEach(async () => {
-    fixture = TestBed.createComponent(NavbarComponent);
+    fixture = TestBed.createComponent(SidenavComponent);
     component = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
 
-    toolbar = await loader.getHarness(MatToolbarHarness);
+    navList = await loader.getHarness(MatNavListHarness);
   });
 
   it('should create', () => {
@@ -54,13 +53,9 @@ describe('NavbarComponent', () => {
   });
 
   it('should change links when signed in', async () => {
-    const signedOutButtons = await loader.getAllHarnesses(MatButtonHarness);
-    expect(signedOutButtons).toHaveSize(3);
-
+    expect(await navList.getItems()).toHaveSize(3);
     userSubject.next({ uid: 'test user' } as User);
-
-    const signedInButtons = await loader.getAllHarnesses(MatButtonHarness);
-    expect(signedInButtons).toHaveSize(2);
+    expect(await navList.getItems()).toHaveSize(2);
   });
 
   it('should have a link to the sign up page', () => {
@@ -84,7 +79,7 @@ describe('NavbarComponent', () => {
 
     userSubject.next({ uid: 'test user' } as User);
 
-    const signOutButton = (await loader.getAllHarnesses(MatButtonHarness))[1];
+    const signOutButton = (await navList.getItems())[1];
     await signOutButton?.click();
     expect(authService.signOut).toHaveBeenCalled();
   });

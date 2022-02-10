@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { connectAuthEmulator, getAuth, provideAuth } from '@angular/fire/auth';
@@ -20,9 +23,7 @@ import { environment } from '../environments/environment';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    NavigationModule,
-    AuthModule,
+    BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => {
       const auth = getAuth();
@@ -38,6 +39,10 @@ import { environment } from '../environments/environment';
       }
       return firestore;
     }),
+    MatSidenavModule,
+    AppRoutingModule,
+    AuthModule,
+    NavigationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

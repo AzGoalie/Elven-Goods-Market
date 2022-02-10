@@ -1,9 +1,17 @@
-import { DebugElement } from '@angular/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatInputModule } from '@angular/material/input';
+import { MatInputHarness } from '@angular/material/input/testing';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { updateInput } from 'src/testing';
 import { AuthError, SignInErrorCode } from '../auth-error';
 import { AuthService } from '../auth.service';
 import { SigninComponent } from './signin.component';
@@ -13,20 +21,55 @@ const mockAuthService = jasmine.createSpyObj('AuthService', ['signIn']);
 describe('SigninComponent', () => {
   let component: SigninComponent;
   let fixture: ComponentFixture<SigninComponent>;
+  let loader: HarnessLoader;
+
+  let emailFormField: MatFormFieldHarness;
+  let emailInput: MatInputHarness;
+
+  let passwordFormField: MatFormFieldHarness;
+  let passwordInput: MatInputHarness;
+
+  let submitButton: MatButtonHarness;
+
   let form: FormGroup;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NoopAnimationsModule,
+      ],
       providers: [{ provide: AuthService, useValue: mockAuthService }],
       declarations: [SigninComponent],
     }).compileComponents();
   });
 
-  beforeEach(() => {
+  beforeEach(async () => {
     fixture = TestBed.createComponent(SigninComponent);
     component = fixture.componentInstance;
+    loader = TestbedHarnessEnvironment.loader(fixture);
+
     fixture.detectChanges();
+
+    emailFormField = await loader.getHarness(
+      MatFormFieldHarness.with({ selector: '#email' })
+    );
+    emailInput = (await emailFormField.getControl(MatInputHarness))!;
+
+    passwordFormField = await loader.getHarness(
+      MatFormFieldHarness.with({ selector: '#password' })
+    );
+    passwordInput = (await passwordFormField.getControl(MatInputHarness))!;
+
+    submitButton = await loader.getHarness(
+      MatButtonHarness.with({ selector: 'button[type="submit"]' })
+    );
+
     form = component.signinForm;
   });
 
@@ -34,42 +77,41 @@ describe('SigninComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should disable the submit button when the form is invalid', () => {
-    const submitButton = fixture.debugElement.query(By.css('.form__button'));
-
+  it('should disable the submit button when the form is invalid', async () => {
     expect(form.invalid).toBeTrue();
-    expect(submitButton.properties['disabled']).toBeTrue();
+    expect(await submitButton.isDisabled()).toBeTrue();
   });
 
-  it('should enable the submit button when the form is valid', () => {
-    const emailInput = fixture.debugElement.query(By.css('#email'));
-    const passwordInput = fixture.debugElement.query(By.css('#password'));
+  it('should enable the submit button when the form is valid', async () => {
+    await emailInput.setValue('test@elvengoods.com');
+    await emailInput.blur();
 
-    updateInput(emailInput, 'test@elvengoods.com');
-    updateInput(passwordInput, 'password');
+    await passwordInput.setValue('password');
+    await passwordInput.blur();
 
-    fixture.detectChanges();
-
-    const submitButton = fixture.debugElement.query(By.css('.form__button'));
     expect(form.valid).toBeTrue();
-    expect(submitButton.properties['disabled']).toBeFalse();
+    expect(await submitButton.isDisabled()).toBeFalse();
   });
 
-  it('should only validate the email after the user has changed inputs', () => {
-    const emailInput = fixture.debugElement.query(By.css('#email'));
-    emailInput.nativeElement.value = 'bad';
-    blurValidation(emailInput);
+  it('should only validate the email after the user has changed inputs', async () => {
+    await emailInput.setValue('bad');
+
+    expect(await emailFormField.hasErrors()).toBeFalse();
+    await emailInput.blur();
+    expect(await emailFormField.hasErrors()).toBeTrue();
   });
 
-  it('should only validate the password after the user has changed inputs', () => {
-    const passwordInput = fixture.debugElement.query(By.css('#password'));
-    blurValidation(passwordInput);
+  it('should only validate the password after the user has changed inputs', async () => {
+    await passwordInput.setValue('');
+
+    expect(await passwordFormField.hasErrors()).toBeFalse();
+    await passwordInput.blur();
+    expect(await passwordFormField.hasErrors()).toBeTrue();
   });
 
-  it('should require an email', () => {
-    const emailInput = fixture.debugElement.query(By.css('#email'));
-    updateInput(emailInput, '');
-    fixture.detectChanges();
+  it('should require an email', async () => {
+    await emailInput.setValue('');
+    await emailInput.blur();
 
     // Validate the form object
     expect(form.valid).toBeFalse();
@@ -78,14 +120,12 @@ describe('SigninComponent', () => {
     });
 
     // Validate the DOM
-    const [error] = getErrors();
-    expect(error.properties['innerText']).toBe('An email address is required');
+    expect(await emailFormField.hasErrors()).toBeTrue();
   });
 
-  it('should not allow invalid email addresses', () => {
-    const emailInput = fixture.debugElement.query(By.css('#email'));
-    updateInput(emailInput, 'invalid email');
-    fixture.detectChanges();
+  it('should not allow invalid email addresses', async () => {
+    await emailInput.setValue('invalid email');
+    await emailInput.blur();
 
     // Validate the form object
     expect(form.valid).toBeFalse();
@@ -94,23 +134,20 @@ describe('SigninComponent', () => {
     });
 
     // Validate the DOM
-    const [error] = getErrors();
-    expect(error.properties['innerText']).toBe('Please enter a valid email');
+    expect(await emailFormField.hasErrors()).toBeTrue();
   });
 
-  it('should allow valid email addresses', () => {
-    const emailInput = fixture.debugElement.query(By.css('#email'));
-    updateInput(emailInput, 'valid@email');
-    fixture.detectChanges();
+  it('should allow valid email addresses', async () => {
+    await emailInput.setValue('valid@email');
+    await emailInput.blur();
 
     expect(component.email?.valid).toBeTrue();
-    expect(getErrors()).toHaveSize(0);
+    expect(await emailFormField.hasErrors()).toBeFalse();
   });
 
-  it('should require a password', () => {
-    const passwordInput = fixture.debugElement.query(By.css('#password'));
-    updateInput(passwordInput, '');
-    fixture.detectChanges();
+  it('should require a password', async () => {
+    await passwordInput.setValue('');
+    await passwordInput.blur();
 
     // Validate the form object
     expect(form.valid).toBeFalse();
@@ -119,17 +156,15 @@ describe('SigninComponent', () => {
     });
 
     // Validate the DOM
-    const [error] = getErrors();
-    expect(error.properties['innerText']).toBe('A password is required');
+    expect(await passwordFormField.hasErrors()).toBeTrue();
   });
 
-  it('should allow valid passwords', () => {
-    const passwordInput = fixture.debugElement.query(By.css('#password'));
-    updateInput(passwordInput, 'password');
-    fixture.detectChanges();
+  it('should allow valid passwords', async () => {
+    await passwordInput.setValue('password');
+    await passwordInput.blur();
 
     expect(component.password?.valid).toBeTrue();
-    expect(getErrors()).toHaveSize(0);
+    expect(await passwordFormField.hasErrors()).toBeFalse();
   });
 
   it('should show an error when a email/password combination does not exist', async () => {
@@ -139,64 +174,37 @@ describe('SigninComponent', () => {
     };
     mockAuthService.signIn.and.rejectWith(errorCode);
 
-    const emailInput = fixture.debugElement.query(By.css('#email'));
-    const passwordInput = fixture.debugElement.query(By.css('#password'));
+    await emailInput.setValue('test@elvengoods.com');
+    await emailInput.blur();
 
-    updateInput(emailInput, 'test@elvengoods.com');
-    updateInput(passwordInput, 'password');
+    await passwordInput.setValue('password');
+    await passwordInput.blur();
 
-    fixture.detectChanges();
+    await submitButton.click();
 
-    const submitButton = fixture.debugElement.query(By.css('.form__button'));
-    submitButton.nativeElement.click();
-
-    await fixture.whenStable().then(() => {
-      fixture.detectChanges();
-
-      const [error] = getErrors();
-      expect(error.properties['innerText']).toContain(
-        'Invalid email / password combination'
-      );
-    });
+    expect(component.signinError).not.toBe('');
+    expect(
+      fixture.debugElement.queryAll(By.css('mat-error:not([hidden])'))
+    ).toHaveSize(1);
   });
 
   it('should sign in a user with a valid form', async () => {
     mockAuthService.signIn.and.resolveTo({});
 
-    const emailInput = fixture.debugElement.query(By.css('#email'));
-    const passwordInput = fixture.debugElement.query(By.css('#password'));
+    await emailInput.setValue('test@elvengoods.com');
+    await emailInput.blur();
 
-    updateInput(emailInput, 'test@elvengoods.com');
-    updateInput(passwordInput, 'password');
+    await passwordInput.setValue('password');
+    await passwordInput.blur();
 
-    fixture.detectChanges();
+    await submitButton.click();
 
-    const submitButton = fixture.debugElement.query(By.css('.form__button'));
-    submitButton.nativeElement.click();
-
-    await fixture.whenStable().then(() => {
-      fixture.detectChanges();
-
-      expect(getErrors()).toHaveSize(0);
-      expect(mockAuthService.signIn).toHaveBeenCalledWith(
-        'test@elvengoods.com',
-        'password'
-      );
-    });
+    expect(
+      fixture.debugElement.queryAll(By.css('mat-error[hidden]'))
+    ).toHaveSize(1);
+    expect(mockAuthService.signIn).toHaveBeenCalledWith(
+      'test@elvengoods.com',
+      'password'
+    );
   });
-
-  const getErrors = () => {
-    return fixture.debugElement.queryAll(By.css('.form__error'));
-  };
-
-  const blurValidation = (debugElement: DebugElement) => {
-    debugElement.nativeElement.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-
-    expect(getErrors()).toHaveSize(0);
-
-    debugElement.nativeElement.dispatchEvent(new Event('blur'));
-    fixture.detectChanges();
-    expect(getErrors()).toHaveSize(1);
-  };
 });

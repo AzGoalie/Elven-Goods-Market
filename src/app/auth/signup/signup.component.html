@@ -1,76 +1,67 @@
 <section class="center">
-  <form class="form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <h1 class="form__title">Create an account</h1>
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>Create an account</mat-card-title>
+    </mat-card-header>
 
-    <div class="form__group">
-      <label for="email">Email</label>
-      <input
-        id="email"
-        type="text"
-        placeholder="Email"
-        formControlName="email"
-        required
-      />
-      <p class="form__error" *ngIf="email?.hasError('email') && email?.touched">
-        Please enter a valid email
-      </p>
-      <p
-        class="form__error"
-        *ngIf="email?.hasError('required') && email?.touched"
-      >
-        An email address is required
-      </p>
-    </div>
+    <mat-card-content>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <mat-form-field id="email" appearance="standard">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            autocomplete="email"
+            formControlName="email"
+            required
+          />
+          <mat-icon matSuffix>mail_outline</mat-icon>
 
-    <div class="form__group">
-      <label for="password">Password</label>
-      <input
-        id="password"
-        type="password"
-        placeholder="Password"
-        formControlName="password"
-        required
-        minlength="6"
-      />
-      <p
-        class="form__error"
-        *ngIf="password?.hasError('required') && password?.touched"
-      >
-        A password is required
-      </p>
-      <p
-        class="form__error"
-        *ngIf="password?.hasError('minlength') && password?.touched"
-      >
-        A password must have at least 6 characters
-      </p>
-    </div>
+          <mat-error *ngIf="email?.hasError('required')">
+            An email address is required
+          </mat-error>
+          <mat-error *ngIf="email?.hasError('email')">
+            Not a valid email address
+          </mat-error>
+        </mat-form-field>
 
-    <div class="form__group">
-      <label for="confirmPassword">Confirm Password</label>
-      <input
-        id="confirmPassword"
-        type="password"
-        placeholder="Confirm Password"
-        formControlName="confirmPassword"
-      />
-      <p
-        class="form__error"
-        *ngIf="
-          signupForm.hasError('passwordMismatch') && confirmPassword?.touched
-        "
-      >
-        Passwords do not match
-      </p>
-      <p class="form__error" *ngIf="signupError">
-        {{ signupError }}
-      </p>
-    </div>
+        <mat-form-field id="password" appearance="standard">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="showPassword.checked ? 'text' : 'password'"
+            autocomplete="new-password"
+            formControlName="password"
+            required
+            minlength="6"
+          />
+          <mat-icon matSuffix>lock_outline</mat-icon>
 
-    <button class="form__button" type="submit" [disabled]="signupForm.invalid">
-      Sign Up
-    </button>
+          <mat-error *ngIf="password?.hasError('required')">
+            A password is requried
+          </mat-error>
+          <mat-error *ngIf="password?.hasError('minlength')">
+            A password must have at least 6 characters
+          </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox #showPassword>Show password</mat-checkbox>
+
+        <mat-error [hidden]="!signupError">
+          {{ signupError }}
+        </mat-error>
+
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="signupForm.invalid"
+          color="primary"
+        >
+          Submit
+        </button>
+      </form>
+    </mat-card-content>
 
     <p>Already have an account? <a routerLink="/signin">Sign in here!</a></p>
-  </form>
+  </mat-card>
 </section>

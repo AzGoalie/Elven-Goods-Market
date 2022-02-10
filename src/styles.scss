@@ -1,66 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
-
-$danger: rgb(175, 0, 0);
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root {
+  --ff-display: "Cinzel Decorative", cursive;
 }
 
+html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .center {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  width: 24rem;
-  padding: 2rem;
-
-  &__title {
-    text-align: center;
-    margin-bottom: 2rem;
+.form-card {
+  mat-card-header {
+    display: flex;
+    justify-content: center;
   }
 
-  &__group {
-    margin-bottom: 1rem;
-    height: 6rem;
+  form {
+    display: flex;
+    flex-direction: column;
+    width: clamp(15rem, 80vw, 25rem);
 
-    label {
-      display: block;
-      padding-bottom: 0.5rem;
+    > mat-error {
+      height: 1rem;
+      padding: 0.25rem;
     }
 
-    input {
+    mat-checkbox {
+      padding-top: 0.5rem;
+    }
+
+    button[type="submit"] {
       width: 100%;
-      height: 3rem;
-      text-indent: 0.5rem;
+      margin-block: 0.75rem;
     }
-  }
-
-  &__button {
-    padding: 0.75rem;
-    margin-top: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-
-  &__error {
-    color: $danger;
-  }
-
-  .ng-invalid.ng-touched {
-    color: $danger;
-    border: 1px solid $danger;
   }
 }
