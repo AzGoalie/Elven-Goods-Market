@@ -1,23 +1,26 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { MatSidenavModule } from '@angular/material/sidenav';
-
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { connectAuthEmulator, getAuth, provideAuth } from '@angular/fire/auth';
+import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import {
+  browserLocalPersistence,
+  browserSessionPersistence,
+  connectAuthEmulator,
+  indexedDBLocalPersistence,
+  initializeAuth,
+  provideAuth,
+} from '@angular/fire/auth';
 import {
   connectFirestoreEmulator,
   getFirestore,
   provideFirestore,
 } from '@angular/fire/firestore';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { NavigationModule } from './navigation/navigation.module';
-
-import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +29,14 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => {
-      const auth = getAuth();
+      const auth = initializeAuth(getApp(), {
+        persistence: [
+          indexedDBLocalPersistence,
+          browserLocalPersistence,
+          browserSessionPersistence,
+        ],
+        popupRedirectResolver: undefined,
+      });
       if (environment.emulators) {
         connectAuthEmulator(auth, 'http://localhost:9099');
       }
