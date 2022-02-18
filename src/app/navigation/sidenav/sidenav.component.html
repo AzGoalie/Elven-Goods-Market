@@ -1,34 +1,34 @@
 <mat-nav-list (click)="closeNav.emit()">
   <a
+    [routerLinkActiveOptions]="{ exact: true }"
     mat-list-item
     routerLink="/"
     routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
   >
     Home
   </a>
   <a
-    mat-list-item
     *ngIf="(authService.user | async) === null"
+    mat-list-item
     routerLink="/signup"
     routerLinkActive="active"
   >
     Sign Up
   </a>
   <a
-    mat-list-item
     *ngIf="(authService.user | async) === null"
+    mat-list-item
     routerLink="/signin"
     routerLinkActive="active"
   >
     Sign In
   </a>
   <a
-    mat-list-item
+    (click)="authService.signOut()"
     *ngIf="authService.user | async"
+    mat-list-item
     routerLink="/signin"
     routerLinkActive="active"
-    (click)="authService.signOut()"
   >
     Sign Out
   </a>

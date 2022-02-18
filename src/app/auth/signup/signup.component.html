@@ -5,15 +5,15 @@
     </mat-card-header>
 
     <mat-card-content>
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <mat-form-field id="email" appearance="standard">
+      <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
+        <mat-form-field appearance="standard" id="email">
           <mat-label>Email</mat-label>
           <input
-            matInput
-            type="email"
             autocomplete="email"
             formControlName="email"
+            matInput
             required
+            type="email"
           />
           <mat-icon matSuffix>mail_outline</mat-icon>
 
@@ -25,15 +25,15 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field id="password" appearance="standard">
+        <mat-form-field appearance="standard" id="password">
           <mat-label>Password</mat-label>
           <input
-            matInput
             [type]="showPassword.checked ? 'text' : 'password'"
             autocomplete="new-password"
             formControlName="password"
-            required
+            matInput
             minlength="6"
+            required
           />
           <mat-icon matSuffix>lock_outline</mat-icon>
 
@@ -52,10 +52,10 @@
         </mat-error>
 
         <button
-          mat-raised-button
-          type="submit"
           [disabled]="signupForm.invalid"
           color="primary"
+          mat-raised-button
+          type="submit"
         >
           Submit
         </button>

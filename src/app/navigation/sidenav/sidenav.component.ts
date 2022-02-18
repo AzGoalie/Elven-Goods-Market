@@ -9,5 +9,6 @@ import { AuthService } from '../../auth/auth.service';
 export class SidenavComponent {
   @Output() closeNav = new EventEmitter<void>();
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService) {
+  }
 }

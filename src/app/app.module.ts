@@ -8,11 +8,7 @@ import {
   initializeAuth,
   provideAuth,
 } from '@angular/fire/auth';
-import {
-  connectFirestoreEmulator,
-  getFirestore,
-  provideFirestore,
-} from '@angular/fire/firestore';
+import { connectFirestoreEmulator, getFirestore, provideFirestore, } from '@angular/fire/firestore';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -57,4 +53,5 @@ import { NavigationModule } from './navigation/navigation.module';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

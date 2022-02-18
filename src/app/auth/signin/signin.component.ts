@@ -17,6 +17,13 @@ export class SigninComponent {
 
   signinError: string = '';
 
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
+  }
+
   get email() {
     return this.signinForm.get('email');
   }
@@ -24,12 +31,6 @@ export class SigninComponent {
   get password() {
     return this.signinForm.get('password');
   }
-
-  constructor(
-    private authService: AuthService,
-    private fb: FormBuilder,
-    private router: Router
-  ) {}
 
   onSubmit(): void {
     this.signinError = '';

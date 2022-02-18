@@ -24,4 +24,5 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   ],
   exports: [NavbarComponent, SidenavComponent],
 })
-export class NavigationModule {}
+export class NavigationModule {
+}

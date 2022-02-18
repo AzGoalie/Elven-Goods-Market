@@ -15,6 +15,15 @@ export class SignupComponent {
     password: [''],
   });
 
+  signupError = '';
+
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
+  }
+
   get email() {
     return this.signupForm.get('email');
   }
@@ -22,14 +31,6 @@ export class SignupComponent {
   get password() {
     return this.signupForm.get('password');
   }
-
-  signupError: string = '';
-
-  constructor(
-    private authService: AuthService,
-    private fb: FormBuilder,
-    private router: Router
-  ) {}
 
   onSubmit(): void {
     if (this.signupForm.valid) {

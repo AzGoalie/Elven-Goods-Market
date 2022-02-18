@@ -29,4 +29,5 @@ import { AuthService } from './auth.service';
     MatInputModule,
   ],
 })
-export class AuthModule {}
+export class AuthModule {
+}

@@ -10,5 +10,6 @@ export class NavbarComponent {
   @Input() isScreenSmall = false;
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService) {
+  }
 }

@@ -1,44 +1,44 @@
 <mat-toolbar class="navbar" color="primary">
   <button
-    mat-icon-button
-    *ngIf="isScreenSmall"
     (click)="toggleSidenav.emit()"
+    *ngIf="isScreenSmall"
     aria-label="Open menu"
+    mat-icon-button
   >
     <mat-icon>menu</mat-icon>
   </button>
   <span class="logo">Elven Goods Market</span>
   <nav *ngIf="!isScreenSmall">
     <a
+      [routerLinkActiveOptions]="{ exact: true }"
       mat-button
       routerLink="/"
       routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
     >
       Home
     </a>
     <a
-      mat-button
       *ngIf="(authService.user | async) === null"
+      mat-button
       routerLink="/signup"
       routerLinkActive="active"
     >
       Sign Up
     </a>
     <a
-      mat-button
       *ngIf="(authService.user | async) === null"
+      mat-button
       routerLink="/signin"
       routerLinkActive="active"
     >
       Sign In
     </a>
     <a
-      mat-button
+      (click)="authService.signOut()"
       *ngIf="authService.user | async"
+      mat-button
       routerLink="/signin"
       routerLinkActive="active"
-      (click)="authService.signOut()"
     >
       Sign Out
     </a>

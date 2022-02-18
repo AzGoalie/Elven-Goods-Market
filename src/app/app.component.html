@@ -5,8 +5,8 @@
   <mat-sidenav-content>
     <header>
       <app-navbar
-        [isScreenSmall]="(isScreenSmall | async) === true"
         (toggleSidenav)="drawer.toggle()"
+        [isScreenSmall]="(isScreenSmall | async) === true"
       ></app-navbar>
     </header>
     <main>
