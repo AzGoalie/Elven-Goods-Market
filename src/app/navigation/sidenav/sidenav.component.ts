@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,6 +9,5 @@ import { AuthService } from '../../auth/auth.service';
 export class SidenavComponent {
   @Output() closeNav = new EventEmitter<void>();
 
-  constructor(public authService: AuthService) {
-  }
+  constructor(public authService: AuthService) {}
 }

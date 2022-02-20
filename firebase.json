@@ -2,9 +2,7 @@
   "hosting": {
     "target": "elven-goods-market",
     "public": "dist/elven-goods-market",
-    "ignore": [
-      "**/.*"
-    ],
+    "ignore": ["**/.*"],
     "headers": [
       {
         "source": "*.[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].+(css|js)",

@@ -9,6 +9,7 @@
     "test": "ng test",
     "test:headless": "ng test --watch=false --browsers=FirefoxDeveloperHeadless",
     "lint": "ng lint",
+    "format": "prettier --write",
     "prepare": "husky install"
   },
   "private": true,
@@ -53,6 +54,7 @@
     "karma-firefox-launcher": "^2.1.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "prettier": "^2.5.1",
     "typescript": "~4.4.3"
   }
 }

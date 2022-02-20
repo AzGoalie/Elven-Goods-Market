@@ -8,21 +8,11 @@
       <form (ngSubmit)="onSubmit()" [formGroup]="signinForm">
         <mat-form-field appearance="standard" id="email">
           <mat-label>Email</mat-label>
-          <input
-            autocomplete="email"
-            formControlName="email"
-            matInput
-            required
-            type="email"
-          />
+          <input autocomplete="email" formControlName="email" matInput required type="email" />
           <mat-icon matSuffix>mail_outline</mat-icon>
 
-          <mat-error *ngIf="email?.hasError('required')">
-            An email address is required
-          </mat-error>
-          <mat-error *ngIf="email?.hasError('email')">
-            Please enter a valid email
-          </mat-error>
+          <mat-error *ngIf="email?.hasError('required')"> An email address is required </mat-error>
+          <mat-error *ngIf="email?.hasError('email')"> Please enter a valid email </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" id="password">
@@ -36,9 +26,7 @@
           />
           <mat-icon matSuffix>lock_outline</mat-icon>
 
-          <mat-error *ngIf="password?.hasError('required')">
-            A password is requried
-          </mat-error>
+          <mat-error *ngIf="password?.hasError('required')"> A password is requried </mat-error>
         </mat-form-field>
 
         <mat-checkbox #showPassword>Show password</mat-checkbox>
@@ -47,12 +35,7 @@
           {{ signinError }}
         </mat-error>
 
-        <button
-          [disabled]="signinForm.invalid"
-          color="primary"
-          mat-raised-button
-          type="submit"
-        >
+        <button [disabled]="signinForm.invalid" color="primary" mat-raised-button type="submit">
           Submit
         </button>
       </form>

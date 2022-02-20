@@ -1,20 +1,20 @@
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonHarness } from '@angular/material/button/testing';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { MatInputModule } from '@angular/material/input';
-import { MatInputHarness } from '@angular/material/input/testing';
-import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AuthError, SignUpErrorCode } from '../auth-error';
-import { AuthService } from '../auth.service';
-import { SignupComponent } from './signup.component';
+import {HarnessLoader} from '@angular/cdk/testing';
+import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {MatButtonHarness} from '@angular/material/button/testing';
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatFormFieldHarness} from '@angular/material/form-field/testing';
+import {MatInputModule} from '@angular/material/input';
+import {MatInputHarness} from '@angular/material/input/testing';
+import {By} from '@angular/platform-browser';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AuthError, SignUpErrorCode} from '../auth-error';
+import {AuthService} from '../auth.service';
+import {SignupComponent} from './signup.component';
 
 const mockAuthService = jasmine.createSpyObj('AuthService', ['createAccount']);
 
@@ -43,7 +43,7 @@ describe('SignupComponent', () => {
         MatFormFieldModule,
         NoopAnimationsModule,
       ],
-      providers: [{ provide: AuthService, useValue: mockAuthService }],
+      providers: [{provide: AuthService, useValue: mockAuthService}],
       declarations: [SignupComponent],
     }).compileComponents();
   });
@@ -55,18 +55,14 @@ describe('SignupComponent', () => {
 
     fixture.detectChanges();
 
-    emailFormField = await loader.getHarness(
-      MatFormFieldHarness.with({ selector: '#email' })
-    );
+    emailFormField = await loader.getHarness(MatFormFieldHarness.with({selector: '#email'}));
     emailInput = (await emailFormField.getControl(MatInputHarness))!;
 
-    passwordFormField = await loader.getHarness(
-      MatFormFieldHarness.with({ selector: '#password' })
-    );
+    passwordFormField = await loader.getHarness(MatFormFieldHarness.with({selector: '#password'}));
     passwordInput = (await passwordFormField.getControl(MatInputHarness))!;
 
     submitButton = await loader.getHarness(
-      MatButtonHarness.with({ selector: 'button[type="submit"]' })
+      MatButtonHarness.with({selector: 'button[type="submit"]'}),
     );
 
     form = component.signupForm;
@@ -186,9 +182,7 @@ describe('SignupComponent', () => {
     await submitButton.click();
 
     expect(component.signupError).not.toBe('');
-    expect(
-      fixture.debugElement.queryAll(By.css('mat-error:not([hidden])'))
-    ).toHaveSize(1);
+    expect(fixture.debugElement.queryAll(By.css('mat-error:not([hidden])'))).toHaveSize(1);
   });
 
   it('should create a new account with a valid form', async () => {
@@ -198,12 +192,7 @@ describe('SignupComponent', () => {
     await passwordInput.setValue('password');
     await submitButton.click();
 
-    expect(
-      fixture.debugElement.queryAll(By.css('mat-error[hidden]'))
-    ).toHaveSize(1);
-    expect(mockAuthService.createAccount).toHaveBeenCalledWith(
-      'test@elvengoods.com',
-      'password'
-    );
+    expect(fixture.debugElement.queryAll(By.css('mat-error[hidden]'))).toHaveSize(1);
+    expect(mockAuthService.createAccount).toHaveBeenCalledWith('test@elvengoods.com', 'password');
   });
 });

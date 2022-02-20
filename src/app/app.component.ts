@@ -1,6 +1,6 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Component} from '@angular/core';
+import {map, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +14,6 @@ export class AppComponent {
   constructor(breakpoints: BreakpointObserver) {
     this.isScreenSmall = breakpoints
       .observe(Breakpoints.XSmall)
-      .pipe(map((breakpoint) => breakpoint.matches));
+      .pipe(map(breakpoint => breakpoint.matches));
   }
 }

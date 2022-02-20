@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthError, SignInErrorCode } from '../auth-error';
-import { AuthService } from '../auth.service';
+import {Component} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthError, SignInErrorCode} from '../auth-error';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -17,12 +17,7 @@ export class SigninComponent {
 
   signinError: string = '';
 
-  constructor(
-    private authService: AuthService,
-    private fb: FormBuilder,
-    private router: Router
-  ) {
-  }
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {}
 
   get email() {
     return this.signinForm.get('email');
@@ -37,13 +32,11 @@ export class SigninComponent {
     if (this.signinForm.valid) {
       this.authService
         .signIn(this.email?.value, this.password?.value)
-        .then((_) => this.router.navigate(['/']))
-        .catch(({ code }: AuthError<SignInErrorCode>) => {
+        .then(_ => this.router.navigate(['/']))
+        .catch(({code}: AuthError<SignInErrorCode>) => {
           switch (code) {
             case 'auth/invalid-email':
-              throw new Error(
-                `${code} - should have been covered by Validators.email`
-              );
+              throw new Error(`${code} - should have been covered by Validators.email`);
             case 'auth/user-disabled':
               this.signinError = 'Account is disabled, please contact support';
               break;
@@ -53,9 +46,7 @@ export class SigninComponent {
               break;
             default:
               const _exhaustiveCheck: never = code;
-              throw new Error(
-                `Unhandled case for SignInErrorCode: ${_exhaustiveCheck}`
-              );
+              throw new Error(`Unhandled case for SignInErrorCode: ${_exhaustiveCheck}`);
           }
         });
     }

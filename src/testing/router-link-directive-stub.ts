@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import {Directive, HostListener, Input} from '@angular/core';
 
 /* eslint-disable @angular-eslint/directive-class-suffix, @angular-eslint/directive-selector */
 @Directive({

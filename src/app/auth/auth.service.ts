@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   Auth,
   authState,
@@ -8,7 +8,7 @@ import {
   User,
   UserCredential,
 } from '@angular/fire/auth';
-import { EMPTY, Observable } from 'rxjs';
+import {EMPTY, Observable} from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -18,10 +18,7 @@ export class AuthService {
     this.user = authState(this.auth);
   }
 
-  public createAccount(
-    email: string,
-    password: string
-  ): Promise<UserCredential> {
+  public createAccount(email: string, password: string): Promise<UserCredential> {
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
 

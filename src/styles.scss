@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-  --ff-display: "Cinzel Decorative", cursive;
+  --ff-display: 'Cinzel Decorative', cursive;
 }
 
 html,
@@ -10,7 +10,7 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 .center {
@@ -39,7 +39,7 @@ body {
       padding-top: 0.5rem;
     }
 
-    button[type="submit"] {
+    button[type='submit'] {
       width: 100%;
       margin-block: 0.75rem;
     }
