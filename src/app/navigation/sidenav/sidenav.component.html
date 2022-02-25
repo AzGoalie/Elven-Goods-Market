@@ -7,25 +7,15 @@
   >
     Home
   </a>
-  <a
-    *ngIf="(authService.user | async) === null"
-    mat-list-item
-    routerLink="/signup"
-    routerLinkActive="active"
-  >
+  <a *ngIf="!authService.isSignedIn()" mat-list-item routerLink="/signup" routerLinkActive="active">
     Sign Up
   </a>
-  <a
-    *ngIf="(authService.user | async) === null"
-    mat-list-item
-    routerLink="/signin"
-    routerLinkActive="active"
-  >
+  <a *ngIf="!authService.isSignedIn()" mat-list-item routerLink="/signin" routerLinkActive="active">
     Sign In
   </a>
   <a
     (click)="authService.signOut()"
-    *ngIf="authService.user | async"
+    *ngIf="authService.isSignedIn()"
     mat-list-item
     routerLink="/signin"
     routerLinkActive="active"
