@@ -14,7 +14,8 @@
   },
   "lint-staged": {
     "*.{ts,js,html,scss}": [
-      "npm run format"
+      "npm run format",
+      "npm run lint"
     ],
     "*.{json,md}": [
       "npm run format"

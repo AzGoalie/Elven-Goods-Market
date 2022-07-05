@@ -17,15 +17,25 @@
     >
       Home
     </a>
-    <a *ngIf="!authService.isSignedIn()" mat-button routerLink="/signup" routerLinkActive="active">
+    <a
+      *ngIf="(authService.user | async) === null"
+      mat-button
+      routerLink="/signup"
+      routerLinkActive="active"
+    >
       Sign Up
     </a>
-    <a *ngIf="!authService.isSignedIn()" mat-button routerLink="/signin" routerLinkActive="active">
+    <a
+      *ngIf="(authService.user | async) === null"
+      mat-button
+      routerLink="/signin"
+      routerLinkActive="active"
+    >
       Sign In
     </a>
     <a
       (click)="authService.signOut()"
-      *ngIf="authService.isSignedIn()"
+      *ngIf="authService.user | async"
       mat-button
       routerLink="/signin"
       routerLinkActive="active"
