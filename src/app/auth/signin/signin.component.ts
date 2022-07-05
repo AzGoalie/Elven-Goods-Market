@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {NonNullableFormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthError, SignInErrorCode} from '../auth-error';
 import {AuthService} from '../auth.service';
@@ -17,21 +17,25 @@ export class SigninComponent {
 
   signinError: string = '';
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private fb: NonNullableFormBuilder,
+    private router: Router,
+  ) {}
 
   get email() {
-    return this.signinForm.get('email');
+    return this.signinForm.controls.email;
   }
 
   get password() {
-    return this.signinForm.get('password');
+    return this.signinForm.controls.password;
   }
 
   onSubmit(): void {
     this.signinError = '';
     if (this.signinForm.valid) {
       this.authService
-        .signIn(this.email?.value, this.password?.value)
+        .signIn(this.email.value, this.password?.value)
         .then(_ => this.router.navigate(['/']))
         .catch(({code}: AuthError<SignInErrorCode>) => {
           switch (code) {

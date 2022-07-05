@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {NonNullableFormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthError, SignUpErrorCode} from '../auth-error';
 import {AuthService} from '../auth.service';
@@ -17,20 +17,24 @@ export class SignupComponent {
 
   signupError = '';
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private fb: NonNullableFormBuilder,
+    private router: Router,
+  ) {}
 
   get email() {
-    return this.signupForm.get('email');
+    return this.signupForm.controls.email;
   }
 
   get password() {
-    return this.signupForm.get('password');
+    return this.signupForm.controls.password;
   }
 
   onSubmit(): void {
     if (this.signupForm.valid) {
       this.authService
-        .createAccount(this.email?.value, this.password?.value)
+        .createAccount(this.email.value, this.password.value)
         .then(_ => this.router.navigate(['/']))
         .catch(({code}: AuthError<SignUpErrorCode>) => {
           switch (code) {
