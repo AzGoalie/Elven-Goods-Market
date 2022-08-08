@@ -1,0 +1,28 @@
+{
+  "kind": "identitytoolkit#DownloadAccountResponse",
+  "users": [
+    {
+      "localId": "dRxHOS3R55mhfDHoMAKq533h0mqp",
+      "lastLoginAt": "1657351362209",
+      "displayName": "",
+      "photoUrl": "",
+      "emailVerified": false,
+      "email": "test@elvengoods.com",
+      "salt": "fakeSalt0492vlLGIqQrOUgihrZh",
+      "passwordHash": "fakeHash:salt=fakeSalt0492vlLGIqQrOUgihrZh:password=password",
+      "passwordUpdatedAt": 1657351362210,
+      "validSince": "1657351362",
+      "createdAt": "1657351362209",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "email": "test@elvengoods.com",
+          "federatedId": "test@elvengoods.com",
+          "rawId": "test@elvengoods.com",
+          "displayName": "",
+          "photoUrl": ""
+        }
+      ]
+    }
+  ]
+}
